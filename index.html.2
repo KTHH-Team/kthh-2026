@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earn with DK</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#07111f;
+    color:#fff;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at 20% 20%,rgba(0,255,200,.12),transparent 30%),
+    radial-gradient(circle at 80% 80%,rgba(100,50,255,.15),transparent 30%);
+    pointer-events:none;
+    z-index:-1;
+}
+
+/* HEADER */
+header{
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    background:rgba(5,12,25,.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#00ffd0;
+}
+
+.menu-btn{
+    width:42px;
+    height:38px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.15);
+    background:#111d31;
+    color:white;
+    font-size:23px;
+    cursor:pointer;
+}
+
+/* SIDE MENU */
+.side-menu{
+    position:fixed;
+    right:-290px;
+    top:0;
+    width:280px;
+    height:100vh;
+    background:#0a1425;
+    padding:80px 20px 20px;
+    z-index:200;
+    transition:.35s;
+    box-shadow:-10px 0 30px rgba(0,0,0,.4);
+}
+
+.side-menu.active{
+    right:0;
+}
+
+.close{
+    position:absolute;
+    top:20px;
+    right:20px;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.menu-item{
+    display:block;
+    padding:14px 16px;
+    margin:9px 0;
+    border-radius:12px;
+    color:white;
+    text-decoration:none;
+    background:linear-gradient(90deg,#10243a,#16243d);
+    border-left:3px solid #00ffd0;
+    transition:.25s;
+}
+
+.menu-item:hover{
+    transform:translateX(-5px);
+    background:linear-gradient(90deg,#123d46,#241d50);
+}
+
+/* MAIN */
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:25px 18px 100px;
+}
+
+.hero{
+    min-height:420px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    border-radius:25px;
+    margin-bottom:25px;
+    padding:35px 20px;
+    background:
+    linear-gradient(rgba(5,15,30,.72),rgba(5,15,30,.85)),
+    radial-gradient(circle at center,#126d72,#151b40 50%,#07111f);
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.hero-content{
+    max-width:700px;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 15px;
+    border-radius:30px;
+    background:rgba(0,255,208,.1);
+    border:1px solid rgba(0,255,208,.35);
+    color:#00ffd0;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:clamp(38px,8vw,72px);
+    margin-bottom:15px;
+}
+
+.hero h1 span{
+    color:#00ffd0;
+}
+
+.hero p{
+    color:#b8c3d4;
+    line-height:1.7;
+    font-size:16px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:13px 22px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#00ffd0,#007cff);
+    color:#00151b;
+    font-weight:bold;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+/* SECTIONS */
+.section{
+    margin-top:30px;
+}
+
+.section-title{
+    margin-bottom:18px;
+}
+
+.section-title h2{
+    font-size:28px;
+}
+
+.section-title p{
+    color:#8795aa;
+    margin-top:6px;
+}
+
+/* SKILLS */
+.skills{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.card{
+    padding:22px;
+    border-radius:18px;
+    background:rgba(14,27,47,.82);
+    border:1px solid rgba(255,255,255,.08);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(0,255,208,.45);
+}
+
+.card-icon{
+    font-size:38px;
+    margin-bottom:12px;
+}
+
+.card h3{
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#9eabbc;
+    line-height:1.6;
+    font-size:14px;
+}
+
+/* ABOUT */
+.about{
+    padding:25px;
+    border-radius:20px;
+    background:rgba(14,27,47,.8);
+    border:1px solid rgba(255,255,255,.08);
+    line-height:1.8;
+    color:#b8c3d4;
+}
+
+/* CONTACT */
+.socials{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+.social{
+    text-decoration:none;
+    color:white;
+    padding:16px;
+    border-radius:14px;
+    background:#101d31;
+    border:1px solid rgba(255,255,255,.08);
+    text-align:center;
+}
+
+/* LOGIN */
+.auth{
+    max-width:450px;
+    margin:50px auto;
+    padding:28px;
+    background:#0d1a2d;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.auth h2{
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    border:none;
+    outline:none;
+    border-radius:10px;
+    background:#17263d;
+    color:white;
+}
+
+.hidden{
+    display:none;
+}
+
+/* AI BUTTON */
+.ai-btn{
+    position:fixed;
+    right:18px;
+    bottom:20px;
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    border:2px solid #00ffd0;
+    background:linear-gradient(135deg,#101c34,#18365a);
+    color:white;
+    font-size:12px;
+    font-weight:bold;
+    z-index:150;
+    box-shadow:0 0 25px rgba(0,255,208,.3);
+    cursor:pointer;
+}
+
+.ai-box{
+    position:fixed;
+    right:18px;
+    bottom:92px;
+    width:310px;
+    max-width:calc(100% - 36px);
+    background:#0b1729;
+    border:1px solid rgba(0,255,208,.3);
+    border-radius:18px;
+    padding:18px;
+    z-index:149;
+    display:none;
+    box-shadow:0 15px 40px rgba(0,0,0,.5);
+}
+
+.ai-box.active{
+    display:block;
+}
+
+.ai-box h3{
+    color:#00ffd0;
+    margin-bottom:8px;
+}
+
+.ai-box p{
+    color:#aebacd;
+    font-size:14px;
+    line-height:1.6;
+}
+
+/* DARK/LIGHT */
+.light{
+    background:#eef3f8;
+    color:#102033;
+}
+
+.light header,
+.light .side-menu,
+.light .card,
+.light .about,
+.light .auth,
+.light .ai-box{
+    background:#fff;
+    color:#102033;
+}
+
+.light .hero{
+    background:linear-gradient(135deg,#dffcf7,#dce9ff);
+}
+
+.light .hero p,
+.light .card p,
+.light .about,
+.light .section-title p{
+    color:#526174;
+}
+
+.theme-btn{
+    position:fixed;
+    left:15px;
+    bottom:18px;
+    border:none;
+    background:#16243a;
+    color:white;
+    padding:10px 13px;
+    border-radius:10px;
+    cursor:pointer;
+    z-index:150;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:25px;
+    color:#68778c;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+@media(max-width:600px){
+    .hero{
+        min-height:390px;
+    }
+
+    .hero h1{
+        font-size:43px;
+    }
+
+    .ai-box{
+        width:280px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Earn <span>with DK</span></div>
+    <button class="menu-btn" onclick="openMenu()">☰</button>
+</header>
+
+<!-- SIDE MENU -->
+<div class="side-menu" id="sideMenu">
+
+    <div class="close" onclick="closeMenu()">×</div>
+
+    <a class="menu-item" href="#home" onclick="closeMenu()">🏠 Dashboard</a>
+    <a class="menu-item" href="#about" onclick="closeMenu()">💎 About Earn with DK</a>
+    <a class="menu-item" href="#skills" onclick="closeMenu()">🚀 Skills</a>
+    <a class="menu-item" href="#learning" onclick="closeMenu()">📚 Learning Center</a>
+    <a class="menu-item" href="#contact" onclick="closeMenu()">📞 Contact</a>
+
+    <a class="menu-item" href="https://t.me/EarnWithDK123" target="_blank">✈️ Telegram Channel</a>
+
+    <a class="menu-item" href="https://t.me/Earn_With_DK" target="_blank">👤 My Telegram</a>
+
+    <a class="menu-item" href="https://chat.whatsapp.com/LyfG6KTNwgxLQ8cYcuBx01" target="_blank">💬 WhatsApp Community</a>
+
+    <button class="menu-item" onclick="showLogin()">🔐 Login / Register</button>
+</div>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-content">
+
+        <div class="badge">🚀 Learn • Build • Grow</div>
+
+        <h1>Welcome to <span>Earn with DK</span></h1>
+
+        <p>
+            Learn digital skills, explore online opportunities,
+            improve your knowledge and build your digital future.
+        </p>
+
+        <a href="#skills" class="btn">Explore Skills →</a>
+
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+
+    <div class="section-title">
+        <h2>💎 About Earn with DK</h2>
+        <p>Learn. Practice. Grow.</p>
+    </div>
+
+    <div class="about">
+        <p>
+            <b>Earn with DK</b> is a digital learning platform created
+            to help beginners explore useful online skills.
+            From coding and graphic design to AI, YouTube Automation,
+            trading and digital marketing, our goal is to make learning
+            simple and practical.
+        </p>
+    </div>
+
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+
+    <div class="section-title">
+        <h2>🚀 Skills & Learning</h2>
+        <p>Explore the skills available on Earn with DK.</p>
+    </div>
+
+    <div class="skills">
+
+        <div class="card">
+            <div class="card-icon">▶️</div>
+            <h3>YouTube Automation</h3>
+            <p>Learn channel ideas, content planning, faceless videos, AI tools and YouTube growth basics.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">₿</div>
+            <h3>Crypto Trading</h3>
+            <p>Understand charts, market structure, support, resistance, risk management and trading basics.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">💱</div>
+            <h3>Forex Trading</h3>
+            <p>Learn currency markets, technical analysis, risk management and trading psychology.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🎨</div>
+            <h3>Graphic Design</h3>
+            <p>Learn creative design, social media graphics, posters, branding and visual content.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">💻</div>
+            <h3>Coding</h3>
+            <p>Start with HTML, CSS and JavaScript and gradually build your own websites.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🎮</div>
+            <h3>Games Promotion</h3>
+            <p>Learn digital promotion, campaign ideas, audience building and social media strategies.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📱</div>
+            <h3>Social Media Marketing</h3>
+            <p>Learn content strategy, audience growth, branding and social media marketing basics.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🤖</div>
+            <h3>AI Learning</h3>
+            <p>Explore modern AI tools, prompting, AI content creation and practical AI workflows.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- LEARNING -->
+<section class="section" id="learning">
+
+    <div class="section-title">
+        <h2>📚 Learning Center</h2>
+        <p>Start your learning journey step by step.</p>
+    </div>
+
+    <div class="about">
+
+        <p>
+            <b>Step 1:</b> Choose a skill you want to learn.
+        </p>
+
+        <p>
+            <b>Step 2:</b> Follow the beginner lessons.
+        </p>
+
+        <p>
+            <b>Step 3:</b> Practice what you learn.
+        </p>
+
+        <p>
+            <b>Step 4:</b> Build real projects.
+        </p>
+
+        <p>
+            <b>Step 5:</b> Continue improving your skills.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+
+    <div class="section-title">
+        <h2>📞 Connect With DK</h2>
+        <p>Join our community.</p>
+    </div>
+
+    <div class="socials">
+
+        <a class="social" href="https://t.me/EarnWithDK123" target="_blank">
+            ✈️ Telegram Channel
+        </a>
+
+        <a class="social" href="https://t.me/Earn_With_DK" target="_blank">
+            👤 Telegram Contact
+        </a>
+
+        <a class="social" href="https://chat.whatsapp.com/LyfG6KTNwgxLQ8cYcuBx01" target="_blank">
+            💬 WhatsApp Community
+        </a>
+
+    </div>
+
+</section>
+
+<!-- LOGIN / REGISTER -->
+<section class="auth hidden" id="auth">
+
+    <h2 id="authTitle">Create Account</h2>
+
+    <div id="registerForm">
+
+        <input id="fullName" type="text" placeholder="Full Name">
+
+        <input id="whatsapp" type="tel" placeholder="WhatsApp Number">
+
+        <input id="email" type="email" placeholder="Email (Optional)">
+
+        <input id="password" type="password" placeholder="Create Password">
+
+        <button class="btn" onclick="register()">Create Account</button>
+
+        <p style="margin-top:15px;color:#8795aa">
+            Already registered?
+            <span onclick="showLoginForm()" style="color:#00ffd0;cursor:pointer">
+                Login
+            </span>
+        </p>
+
+    </div>
+
+    <div id="loginForm" class="hidden">
+
+        <input id="loginEmail" type="email" placeholder="Email or WhatsApp Number">
+
+        <input id="loginPassword" type="password" placeholder="Password">
+
+        <button class="btn" onclick="login()">Login</button>
+
+        <p style="margin-top:15px;color:#8795aa">
+            New user?
+            <span onclick="showRegisterForm()" style="color:#00ffd0;cursor:pointer">
+                Create Account
+            </span>
+        </p>
+
+    </div>
+
+    <div id="userDashboard" class="hidden">
+
+        <h3>🎉 Welcome!</h3>
+
+        <p id="userWelcome" style="margin-top:10px;color:#aebacd"></p>
+
+        <button class="btn" onclick="logout()">Logout</button>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- THEME -->
+<button class="theme-btn" onclick="toggleTheme()">🌙</button>
+
+<!-- AI ASSISTANT -->
+<button class="ai-btn" onclick="toggleAI()">DK AI</button>
+
+<div class="ai-box" id="aiBox">
+
+    <h3>🤖 DK AI Assistant</h3>
+
+    <p>
+        Hello! I'm your DK AI Assistant.
+        I can guide you about the skills available on this website.
+    </p>
+
+    <input id="aiQuestion" type="text" placeholder="Ask something...">
+
+    <button class="btn" onclick="askAI()">Ask AI</button>
+
+    <p id="aiAnswer" style="margin-top:12px;"></p>
+
+</div>
+
+<footer>
+    © 2026 Earn with DK • Learn • Build • Grow
+</footer>
+
+<script>
+
+/* MENU */
+function openMenu(){
+    document.getElementById("sideMenu").classList.add("active");
+}
+
+function closeMenu(){
+    document.getElementById("sideMenu").classList.remove("active");
+}
+
+/* THEME */
+function toggleTheme(){
+    document.body.classList.toggle("light");
+}
+
+/* AI */
+function toggleAI(){
+    document.getElementById("aiBox").classList.toggle("active");
+}
+
+function askAI(){
+
+    let q=document.getElementById("aiQuestion").value.toLowerCase();
+    let answer="";
+
+    if(q.includes("coding")){
+        answer="💻 Coding: Start with HTML, then CSS and JavaScript. Build small projects while learning.";
+    }
+    else if(q.includes("youtube")){
+        answer="▶️ YouTube Automation: Learn niche research, scripting, AI tools, editing and channel management.";
+    }
+    else if(q.includes("crypto")){
+        answer="₿ Crypto: Learn market structure, support/resistance and especially risk management before trading real money.";
+    }
+    else if(q.includes("forex")){
+        answer="💱 Forex: Start with market basics, technical analysis, risk management and trading psychology.";
+    }
+    else if(q.includes("design")){
+        answer="🎨 Graphic Design: Start with typography, composition, colors and practice making posters and social media designs.";
+    }
+    else if(q.includes("ai")){
+        answer="🤖 AI Learning: Learn prompting, AI tools, content creation and practical AI workflows.";
+    }
+    else{
+        answer="🤖 I can guide you about Coding, AI, YouTube Automation, Crypto, Forex, Graphic Design, Games Promotion and Social Media Marketing.";
+    }
+
+    document.getElementById("aiAnswer").innerText=answer;
+}
+
+/* AUTH */
+function showLogin(){
+    document.getElementById("auth").classList.remove("hidden");
+    document.getElementById("auth").scrollIntoView({behavior:"smooth"});
+}
+
+function showLoginForm(){
+    document.getElementById("registerForm").classList.add("hidden");
+    document.getElementById("loginForm").classList.remove("hidden");
+}
+
+function showRegisterForm(){
+    document.getElementById("loginForm").classList.add("hidden");
+    document.getElementById("registerForm").classList.remove("hidden");
+}
+
+/* REGISTER */
+function register(){
+
+    let name=document.getElementById("fullName").value;
+    let whatsapp=document.getElementById("whatsapp").value;
+    let email=document.getElementById("email").value;
+    let password=document.getElementById("password").value;
+
+    if(!name || !whatsapp || !password){
+        alert("Please enter Full Name, WhatsApp Number and Password.");
+        return;
+    }
+
+    let user={
+        name:name,
+        whatsapp:whatsapp,
+        email:email,
+        password:password
+    };
+
+    localStorage.setItem("earnDKUser",JSON.stringify(user));
+
+    alert("Account created successfully!");
+
+    showLoginForm();
+}
+
+/* LOGIN */
+function login(){
+
+    let loginID=document.getElementById("loginEmail").value;
+    let password=document.getElementById("loginPassword").value;
+
+    let user=JSON.parse(localStorage.getItem("earnDKUser"));
+
+    if(!user){
+        alert("No account found. Please register first.");
+        return;
+    }
+
+    if(
+        (loginID===user.email || loginID===user.whatsapp)
+        && password===user.password
+    ){
+
+        document.getElementById("registerForm").classList.add("hidden");
+        document.getElementById("loginForm").classList.add("hidden");
+        document.getElementById("userDashboard").classList.remove("hidden");
+
+        document.getElementById("userWelcome").innerText=
+        "Welcome "+user.name+"! Your account is active.";
+
+    }else{
+        alert("Incorrect login details.");
+    }
+}
+
+/* LOGOUT */
+function logout(){
+
+    document.getElementById("userDashboard").classList.add("hidden");
+    document.getElementById("loginForm").classList.remove("hidden");
+
+    document.getElementById("loginEmail").value="";
+    document.getElementById("loginPassword").value="";
+}
+
+</script>
+
+</body>
+</html>
